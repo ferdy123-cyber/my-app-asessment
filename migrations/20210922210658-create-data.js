@@ -8,12 +8,17 @@ module.exports = {
                 default: Sequelize.UUIDV4,
                 primaryKey: true,
             },
-            name: {
+            description: {
                 type: Sequelize.STRING(50),
                 allowNull: false,
             },
-            description: {
-                type: Sequelize.STRING,
+            type: {
+                type: Sequelize.STRING(10),
+                allowNull: false,
+            },
+            price: {
+                type: Sequelize.FLOAT(10),
+                allowNull: false,
             },
             user_id: {
                 type: Sequelize.UUID,

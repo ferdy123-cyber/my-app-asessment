@@ -9,8 +9,16 @@ Product.init({
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
     },
-    name: {
+    description: {
         type: DataTypes.STRING(50),
+        allowNull: false,
+    },
+    type: {
+        type: DataTypes.STRING(10),
+        allowNull: false,
+    },
+    price: {
+        type: DataTypes.FLOAT(10),
         allowNull: false,
     },
 }, {

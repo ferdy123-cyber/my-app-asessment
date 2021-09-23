@@ -1,12 +1,13 @@
 const uuid = require("uuid");
-const brcypt = require("bcrypt");
+// const brcypt = require("bcrypt");
 
 module.exports = {
     up: async(queryInterface, Sequelize) => {
         return queryInterface.bulkInsert("Users", [{
                 id: uuid.v4(),
                 email: "ferdyfian11@gmail.com",
-                password: brcypt.hashSync("rahasia123", 12),
+                password: "rahasia123",
+                // password: brcypt.hashSync("rahasia123", 12),
                 name: "ferdyfian yohan aziizul alfandy",
                 created_at: new Date(),
                 updated_at: new Date(),
@@ -14,7 +15,8 @@ module.exports = {
             {
                 id: uuid.v4(),
                 email: "agus445@gmail.com",
-                password: brcypt.hashSync("zxc123", 12),
+                // password: brcypt.hashSync("zxc123", 12),
+                password: "zxc123",
                 name: "cahbagus",
                 created_at: new Date(),
                 updated_at: new Date(),
