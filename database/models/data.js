@@ -23,6 +23,7 @@ Product.init({
     },
 }, {
     modelName: "Datas",
+    freezeTableName: true,
     sequelize: connection,
     paranoid: true,
     timestamps: true,

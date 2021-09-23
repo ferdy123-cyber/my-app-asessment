@@ -34,6 +34,7 @@ User.init({
     },
 }, {
     modelName: "Users",
+    freezeTableName: true,
     sequelize: connection,
     paranoid: true,
     timestamps: true,

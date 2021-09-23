@@ -1,5 +1,5 @@
 const { User } = require("../database/models");
-// const brcypt = require("bcrypt");
+const brcypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { SECRET_TOKEN } = process.env;
 
@@ -17,12 +17,11 @@ const register = async(req, res, next) => {
             throw new Error("User already exist");
         }
 
-        // const hashPassword = await brcypt.hash(password, 12);
+        const hashPassword = await brcypt.hash(password, 12);
 
         const newUser = await User.create({
             email,
-            // password: hashPassword,
-            password,
+            password: hashPassword,
             name,
         });
 
