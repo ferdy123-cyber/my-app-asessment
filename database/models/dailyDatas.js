@@ -1,40 +1,41 @@
 const { Model, DataTypes } = require("sequelize");
 const connection = require("../connection");
 
-class Product extends Model {}
+class DailyData extends Model {}
 
-Product.init(
+DailyData.init(
   {
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4,
     },
-    description: {
-      type: DataTypes.STRING(50),
+    date: {
+      type: DataTypes.STRING(15),
       allowNull: false,
     },
-    type: {
-      type: DataTypes.STRING(25),
-      allowNull: false,
-    },
-    price: {
+    total_income: {
       type: DataTypes.FLOAT(25),
       allowNull: false,
     },
-    time: {
-      type: DataTypes.STRING(15),
+    total_expense: {
+      type: DataTypes.FLOAT(25),
+      allowNull: false,
+    },
+    total_balance: {
+      type: DataTypes.FLOAT(25),
       allowNull: false,
     },
   },
   {
-    modelName: "Datas",
+    modelName: "DailyDatas",
     freezeTableName: true,
     sequelize: connection,
     timestamps: true,
+    underscored: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
   }
 );
 
-module.exports = Product;
+module.exports = DailyData;

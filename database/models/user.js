@@ -21,17 +21,6 @@ User.init({
         type: DataTypes.STRING(100),
         allowNull: false,
     },
-    created_at: {
-        type: DataTypes.DATE,
-        default: new Date(),
-    },
-    updated_at: {
-        type: DataTypes.DATE,
-        default: new Date(),
-    },
-    deleted_at: {
-        type: DataTypes.DATE,
-    },
 }, {
     modelName: "Users",
     freezeTableName: true,
@@ -39,6 +28,9 @@ User.init({
     paranoid: true,
     timestamps: true,
     underscored: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
+    deletedAt: "deleted_at",
 });
 
 module.exports = User;
