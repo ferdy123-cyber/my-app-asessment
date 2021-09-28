@@ -124,14 +124,13 @@ const addData = async (req, res, next) => {
   }
 };
 
-const update = async (req, res, next) => {
+const updateData = async (req, res, next) => {
   try {
     const { user } = req;
-    const { type, description, time, price } = req.body;
+    const { type, description, time, price, id } = req.body;
 
-    const updateData = await Data.update(
+    await Data.update(
       {
-        id,
         type,
         description,
         price,
@@ -144,9 +143,16 @@ const update = async (req, res, next) => {
         },
       }
     );
+
+    const datas = await Data.findOne({
+      where: {
+        id: id,
+      },
+    });
+
     const data = await Data.findAll({
       where: {
-        dailyData_id: updateData.dailyData_id,
+        dailyData_id: datas.dailyData_id,
       },
     });
 
@@ -170,14 +176,13 @@ const update = async (req, res, next) => {
       },
       {
         where: {
-          id: updateData.dailyData_id,
+          id: datas.dailyData_id,
         },
       }
     );
     return res.status(201).json({
       status: "succes",
       code: 201,
-      message: "success add new data and dailydata",
       income: income,
       expense: expense,
       balance: balance,
@@ -185,6 +190,60 @@ const update = async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
+};
+
+const deleteData = async (req, res, next) => {
+  const { id } = req.params;
+
+  const datas = await Data.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  await Data.destroy({
+    where: {
+      id: id,
+    },
+  });
+
+  const data = await Data.findAll({
+    where: {
+      dailyData_id: datas.dailyData_id,
+    },
+  });
+
+  const income = data
+    .filter((val) => val.type === "income")
+    .map((e) => e.price)
+    .reduce((a, b) => a + b, 0);
+
+  const expense = data
+    .filter((val) => val.type === "expense")
+    .map((e) => e.price)
+    .reduce((a, b) => a + b, 0);
+
+  const balance = income - expense;
+
+  await DailyData.update(
+    {
+      total_income: income,
+      total_expense: expense,
+      total_balance: balance,
+    },
+    {
+      where: {
+        id: datas.dailyData_id,
+      },
+    }
+  );
+  return res.status(201).json({
+    status: "succes",
+    code: 201,
+    income: income,
+    expense: expense,
+    balance: balance,
+  });
 };
 
 const getDataById = async (req, res, next) => {
@@ -238,5 +297,6 @@ module.exports = {
   addData,
   getDataById,
   getDataDaily,
-  update,
+  updateData,
+  deleteData,
 };
